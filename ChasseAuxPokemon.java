@@ -1,4 +1,4 @@
-package tp5;
+package src.tp5;
 import java.util.Scanner;
 
 public class ChasseAuxPokemon {
@@ -20,7 +20,7 @@ public class ChasseAuxPokemon {
 		//instanciation tableau
 		Nourriture[] diversesNourritures = new Nourriture[] {tartiflette, ratatouille, barreChocolat, mojito};
 		
-		//code qui génère aléatoirement de la nourriture
+		//code qui genere aleatoirement de la nourriture
 		double alea;
 		int nombreDEssais = Integer.valueOf(args[0]);
 		String reponse = "";
@@ -33,7 +33,7 @@ public class ChasseAuxPokemon {
 				if (alea < diversesNourritures[j].getFrequence()) {
 					generer = true;
 					nourritureGeneree[j] = diversesNourritures[j].genererMemeNourriture(generer);
-					System.out.println("Vous avez trouvé un.e/du/de la " + nourritureGeneree[j]);
+					System.out.println("Vous avez trouve un.e/du/de la " + nourritureGeneree[j]);
 					System.out.println("Voulez-vous prendre cette nourriture ? (oui/non)");
 					String reponseNourriture = scanner.next();
 					if (reponseNourriture.equals("oui")) {
@@ -60,9 +60,7 @@ public class ChasseAuxPokemon {
 				ben.caresserPokemon(ben.getPokemons()[reponseCaresse]);
 			}
 			if (reponse.equals("3")) {
-				for (int i = 0; i < ben.getProvisions().length; i++) {
-					System.out.println("Index " + i + " : " + ben.getProvisions()[i].nom);
-				}
+				ben.afficherProvision();
 			}
 			if (reponse.equals("4")) {
 				System.out.println("Quel pokemon voulez-vous nourrir ?");
@@ -70,13 +68,13 @@ public class ChasseAuxPokemon {
 				System.out.println("Que voulez-vous lui donner ?");
 				int reponseNourriture = scanner.nextInt();
 				ben.getPokemons()[reponsePokemon].manger(ben.getProvisions()[reponseNourriture]);
-				System.out.println(ben.getPokemons()[reponsePokemon].getNom() + " a mangé " + ben.getProvisions()[reponseNourriture]
+				System.out.println(ben.getPokemons()[reponsePokemon].getNom() + " a mange " + ben.getProvisions()[reponseNourriture]
 						.nom);
 			}
 			System.out.println("Voulez-vous continuer ?");
 			reponse = scanner.next();
 		}
-		System.out.println("Arrêt du jeu !");
+		System.out.println("Arret du jeu !");
 		scanner.close();
 		
 		
@@ -84,14 +82,14 @@ public class ChasseAuxPokemon {
 	
 	//TP5
 	//Q1- La signature du constructeur pour un objet de type Scanner est : public Scanner(InputStream source)
-	//Pour une entrée de type fichier : public Scanner(File source)
-	//Q3- L'erreur de compilation retournée est : "Scanner cannot be resolved to a type".
+	//Pour une entree de type fichier : public Scanner(File source)
+	//Q3- L'erreur de compilation retournee est : "Scanner cannot be resolved to a type".
 	//Q5- Exercice sur l'utilisation du scanner
-		//System.out.println("Êtes-vous étudiant de première année à l'IUT du Limousin ?");
+		//System.out.println("Etes-vous etudiant de premiere annee a l'IUT du Limousin ?");
 		//String reponse = scanner.next();
 		//System.out.println(reponse);
 		//scanner.close();
-	//Q5b- La méthode next() de la classe Scanner recherche et renvoie le "token" suivant du scanner.
-	//Q5e- Lors d'une réponse à plusieurs mots, seul le premier mot est affiché avec la commande System.out.println.
+	//Q5b- La methode next() de la classe Scanner recherche et renvoie le "token" suivant du scanner.
+	//Q5e- Lors d'une reponse a plusieurs mots, seul le premier mot est affiche avec la commande System.out.println.
 }
 

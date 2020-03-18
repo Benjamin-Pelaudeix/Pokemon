@@ -1,10 +1,10 @@
-package tp5;
+package src.tp5;
 
 public class Nourriture {
 	
 	protected int apport;
 	protected String nom;
-	protected String[] compatibilites = new String[18]; //on instancie le tableau à 18 car il existe 18 types de pokemons différents
+	protected String[] compatibilites = new String[18]; //on instancie le tableau a 18 car il existe 18 types de pokemons differents
 	protected int frequence;
 	
 	public static final String[] tousLesTypesDePokemons = new String[]{"Acier", "Combat", "Dragon", "Eau", "Electrique", "Fee", "Feu", "Glace", "Insecte", "Normal", "Plante", "Poison", "Psy", "Roche", "Sol", "Spectre", "Tenebres", "Vol"}; 

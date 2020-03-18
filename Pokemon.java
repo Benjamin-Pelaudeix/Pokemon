@@ -1,4 +1,4 @@
-package tp5;
+package src.tp5;
 
 public class Pokemon {
 	
@@ -48,7 +48,7 @@ public class Pokemon {
 	public void sePresenter() {
 		System.out.println("Voici un pokemon " + this.nom + " de niveau " + this.niveau);
 		if (this.monJoueur != null) {
-			System.out.println("Il appartient à " + this.monJoueur);
+			System.out.println("Il appartient ï¿½ " + this.monJoueur);
 			if (this.nomDonne != null) {
 				System.out.println("Il s'appelle " + this.nomDonne);
 			}
@@ -158,6 +158,6 @@ public class Pokemon {
 	}
 	
 	public String toString() {
-		return("[ Nom : " + this.nom + "; Type : " + this.type + "; Niveau : " +this.niveau + "; Diurne : " + this.diurne + " ; Appétit : " + this.appetit + " ; Loyauté : " + this.loyaute + "; Nom Donné : " + this.nomDonne + "; Mon Joueur : " + this.monJoueur + " ]");
+		return("[ Nom : " + this.nom + "; Type : " + this.type + "; Niveau : " +this.niveau + "; Diurne : " + this.diurne + " ; Appetit : " + this.appetit + " ; Loyaute : " + this.loyaute + "; Nom Donne : " + this.nomDonne + "; Mon Joueur : " + this.monJoueur + " ]");
 	}
 }

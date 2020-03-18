@@ -1,4 +1,4 @@
-package tp5;
+package src.tp5;
 
 public class Joueur {
 	
@@ -52,7 +52,7 @@ public class Joueur {
 	private int trouverProvision(Nourriture nourriture) {
 		int position = -1;
 		for (int i = 0; i < provisions.length; i++) {
-			if (provisions[i].nom.equals(nourriture.nom)) {
+			if (provisions[i] == nourriture){
 				return i;
 			}
 		}
@@ -67,6 +67,14 @@ public class Joueur {
 			System.out.println("Vous n'avez plus de place dans votre sac de provision...");
 		}
 	}
+
+	public void afficherProvision() {
+		for (int i = 0; i < this.provisions.length; i++) {
+			if (this.provisions[i] != null) {
+				System.out.println(i + " : " + this.provisions[i].nom);
+			}
+		}
+	}
 	
 	public void nourrirPokemon(Pokemon pokemon, Nourriture nourriture) {
 		if (pokemon == null || nourriture == null || pokemon.getMonJoueur() != this) {
@@ -76,7 +84,7 @@ public class Joueur {
 			pokemon.manger(nourriture);
 			System.out.println(pokemon + " mange " + nourriture);
 			provisions[trouverProvision(nourriture)] = null;
-			System.out.println(nourriture + " a été retirée de votre sac");
+			System.out.println(nourriture + " a ete retiree de votre sac");
 		}
 	}
 	
@@ -93,17 +101,17 @@ public class Joueur {
 		return -1;
 	}
 	
-	//Question 3- On peut utiliser la méthode trouverPokemon pour trouver une place disponible dans notre tableau de Pokémon en spécifiant en entrer la référence mémoire "null".
+	//Question 3- On peut utiliser la methode trouverPokemon pour trouver une place disponible dans notre tableau de Pokï¿½mon en specifiant en entrer la reference memoire "null".
 	
 	public void capturer(Pokemon pokemon) {
 		if ((pokemon.getMonJoueur() == null) && trouverPokemon(null) != -1) {
-			pokemon.setMonJoueur(this); //mise à jour des informations du pokemon
+			pokemon.setMonJoueur(this); //mise ï¿½ jour des informations du pokemon
 			pokemon.setAppetit(10);
 			pokemon.setLoyaute(0);
 			pokemons[trouverPokemon(null)] = pokemon;
 		} 
 		else {
-			System.out.println("Vous ne pouvez pas posséder un autre pokémon... Veuillez en libérer un");
+			System.out.println("Vous ne pouvez pas posseder un autre pokï¿½mon... Veuillez en liberer un");
 		}
 	}
 	
@@ -140,7 +148,7 @@ public class Joueur {
 		else
 		{
 			if (pokemon.getLoyaute() + 1 < 100) {
-				System.out.println("Mmmm, ça sent bon. Et sous mon oreille gauche ?");
+				System.out.println("Mmmm, ca sent bon. Et sous mon oreille gauche ?");
 			}
 			else {
 				System.out.println("Oui, moi aussi je t'aime !");
