@@ -6,8 +6,8 @@ public class AttaquePhysique extends Attaque {
 
     Random random = new Random();
 
-    public AttaquePhysique(String nom, String[] compatibilites, int puissance, int precision, int nombreRepetitions) {
-        super(nom, compatibilites, puissance, precision, nombreRepetitions);
+    public AttaquePhysique(String nom, int puissance, int precision, int nombreRepetitions) {
+        super(nom, puissance, precision, nombreRepetitions);
     }
 
     @Override
