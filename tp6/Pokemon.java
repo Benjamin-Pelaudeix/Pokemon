@@ -34,7 +34,7 @@ public class Pokemon {
 		this.defenseSpeciale = defenseSpeciale;
 		this.hp = 30;
 		for (int i = 0; i < attaques.length; i++) {
-			if (this.attaques[i] != null) {
+			if (attaques[i] != null) {
 				this.ajouterAttaque(attaques[i]);
 			}
 		}
@@ -134,8 +134,9 @@ public class Pokemon {
 	}
 
 	public void ajouterAttaque(Attaque attaque) {
-		if (attaque.isCompatible(this) && trouverAttaque(null) != -1) {
-			attaques[trouverAttaque(null)] = attaque;
+		int positionLibre = trouverAttaque(null);
+		if (attaque.isCompatible(this) && positionLibre != -1) {
+			attaques[positionLibre] = attaque;
 		}
 		else {
 			System.out.println("Votre pokemon n'est pas compatible ou il n'a plus de place dans ses attaques....");
@@ -179,6 +180,7 @@ public class Pokemon {
 		if (!victime.etreEvanoui() && index >= 0 && index < attaques.length) {
 			if (attaques[index] != null) {
 				attaques[index].utiliserAttaque(this, victime);
+				System.out.println(this.nom + " utilise " + attaques[index].getNom());
 			}
 		}
 	}

@@ -28,10 +28,10 @@ public class AttaquePhysique extends Attaque {
     @Override
     public boolean isCompatible(Pokemon pokemon) {
         if (pokemon == null) {
-            return true;
+            return false;
         }
         else {
-            return false;
+            return true;
         }
     }
 }
