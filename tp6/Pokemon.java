@@ -66,7 +66,7 @@ public class Pokemon {
 	public void sePresenter() {
 		System.out.println("Voici un pokemon " + this.nom + " de niveau " + this.niveau);
 		if (this.monJoueur != null) {
-			System.out.println("Il appartient � " + this.monJoueur);
+			System.out.println("Il appartient a " + this.monJoueur);
 			if (this.nomDonne != null) {
 				System.out.println("Il s'appelle " + this.nomDonne);
 			}
@@ -188,7 +188,7 @@ public class Pokemon {
 	public void afficherEtatAttaques() {
 		for (int i = 0; i < attaques.length; i++) {
 			if (this.attaques[i] != null) {
-				System.out.println(i + " : " + this.attaques[i].getNom() + " , " + this.attaques[i].getRepetitionsRestantes() + "/" + this.attaques[i].getNombreRepetitions() + "\n");
+				System.out.println(i + " : " + this.attaques[i].getNom() + " , " + this.attaques[i].getRepetitionsRestantes() + "/" + this.attaques[i].getNombreRepetitions());
 			}
 		}
 	}

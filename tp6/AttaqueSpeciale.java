@@ -19,8 +19,8 @@ public class AttaqueSpeciale extends Attaque {
                 if (attaquant.getAttaqueSpeciale() + aleatoireAttaque > victime.getDefenseSpeciale() + aleatoireVictime) {
                     precision = random.nextInt(100);
                     victime.blessure(random.nextInt(puissance));
-                    repetitionsRestantes--;
                 }
+                repetitionsRestantes--;
             }
         }
     }

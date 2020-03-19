@@ -19,8 +19,9 @@ public class AttaquePhysique extends Attaque {
                 if (attaquant.getAttaque() + aleatoireAttaque > victime.getDefense() + aleatoireVictime) {
                    precision = random.nextInt(100);
                    victime.blessure(random.nextInt(puissance));
-                   repetitionsRestantes--;
                 }
+                System.out.println(victime.getNom() + " a perdu " + random.nextInt(puissance) + " HP (HP restant : " + victime.getHp() + ")");
+                repetitionsRestantes--;
             }
         }
     }
