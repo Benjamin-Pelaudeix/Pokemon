@@ -34,12 +34,28 @@ public class ChasseAuxPokemon {
 			reponsePokemon2 = scanner.nextInt();
 		}
 		System.out.println("### Vous engagez un combat entre " + ben.getPokemons()[reponsePokemon1].getNom() + " et " + ben.getPokemons()[reponsePokemon2].getNom() + " ###");
-		while (ben.getPokemons()[reponsePokemon1].etreEvanoui() == false || ben.getPokemons()[reponsePokemon2].etreEvanoui() == false) {
+		while (ben.getPokemons()[reponsePokemon1].etreEvanoui() == false && ben.getPokemons()[reponsePokemon2].etreEvanoui() == false) {
 			System.out.println(ben.getPokemons()[reponsePokemon1].getNom() + " (HP : " + ben.getPokemons()[reponsePokemon1].getHp() + ") choisit une attaque...");
 			ben.getPokemons()[reponsePokemon1].afficherEtatAttaques();
 			int reponseAttaquePokemon1 = scanner.nextInt();
 			ben.getPokemons()[reponsePokemon1].utiliserAttaque(reponseAttaquePokemon1, ben.getPokemons()[reponsePokemon2]);
+			if (ben.getPokemons()[reponsePokemon2].etreEvanoui()) {
+				System.out.println("### Combat termine ! " + ben.getPokemons()[reponsePokemon2].getNom() + " est KO... ###");
+			}
+			else {
+				System.out.println(ben.getPokemons()[reponsePokemon2].getNom() + " (HP : " + ben.getPokemons()[reponsePokemon1].getHp() + ") choisit une attaque...");
+				ben.getPokemons()[reponsePokemon2].afficherEtatAttaques();
+				int reponseAttaquePokemon2 = scanner.nextInt();
+				ben.getPokemons()[reponsePokemon2].utiliserAttaque(reponseAttaquePokemon2, ben.getPokemons()[reponsePokemon1]);
+				if (ben.getPokemons()[reponsePokemon1].etreEvanoui()) {
+					System.out.println("### Combat termine ! " + ben.getPokemons()[reponsePokemon1].getNom() + " est KO... ###");
+				}
+			}
 		}
+
+
+
+
 
 
 

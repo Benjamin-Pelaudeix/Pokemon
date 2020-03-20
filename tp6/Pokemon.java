@@ -134,7 +134,7 @@ public class Pokemon {
 	}
 
 	public void ajouterAttaque(Attaque attaque) {
-		int positionLibre = trouverAttaque(null);
+		int positionLibre = this.trouverAttaque(null);
 		if (attaque.isCompatible(this) && positionLibre != -1) {
 			attaques[positionLibre] = attaque;
 		}
@@ -237,7 +237,7 @@ public class Pokemon {
 
 	public int getDefenseSpeciale() { return this.defenseSpeciale;	}
 
-	public int getHp() { return this.hp;	}
+	public int getHp() { return this.hp; }
 
 	public Attaque[] getAttaques() { return this.attaques;	}
 
