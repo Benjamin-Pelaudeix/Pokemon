@@ -16,8 +16,8 @@ public class AttaqueSpeciale extends Attaque {
             if (repetitionsRestantes > 0) {
                 int aleatoireAttaque = random.nextInt(attaquant.getAttaqueSpeciale());
                 int aleatoireVictime = random.nextInt(victime.getDefenseSpeciale());
-                if (attaquant.getAttaqueSpeciale() + aleatoireAttaque > victime.getDefenseSpeciale() + aleatoireVictime) {
-                    precision = random.nextInt(100);
+                precision = random.nextInt(100);
+                if (attaquant.getAttaqueSpeciale() + aleatoireAttaque > victime.getDefenseSpeciale() + aleatoireVictime && precision <= this.getPrecision()) {
                     victime.blessure(random.nextInt(puissance));
                 }
                 repetitionsRestantes--;
@@ -28,10 +28,12 @@ public class AttaqueSpeciale extends Attaque {
     @Override
     public boolean isCompatible(Pokemon pokemon) {
         boolean compatible = false;
-        for (int i = 0; i<this.compatibilites.length; i++) {
+        int i = 0;
+        while (i < this.compatibilites.length && !compatible) {
             if (this.compatibilites[i].equals(pokemon.getType())) {
                 compatible = true;
             }
+            i++;
         }
         return compatible;
     }

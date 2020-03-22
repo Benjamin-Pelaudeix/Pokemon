@@ -24,7 +24,7 @@ public abstract class Attaque {
     }
 
     public void resetNombreRepetitions() {
-        repetitionsRestantes = this.nombreRepetitions;
+        this.repetitionsRestantes = this.nombreRepetitions;
     }
 
     public void baisserNombreRepetitions() {
