@@ -41,6 +41,8 @@ public class ChasseAuxPokemon {
 			ben.getPokemons()[reponsePokemon1].utiliserAttaque(reponseAttaquePokemon1, ben.getPokemons()[reponsePokemon2]);
 			if (ben.getPokemons()[reponsePokemon2].etreEvanoui()) {
 				System.out.println("### Combat termine ! " + ben.getPokemons()[reponsePokemon2].getNom() + " est KO... ###");
+				ben.getPokemons()[reponsePokemon1].rechargerAttaques();
+				ben.getPokemons()[reponsePokemon2].rechargerAttaques();
 			}
 			else {
 				System.out.println(ben.getPokemons()[reponsePokemon2].getNom() + " (HP : " + ben.getPokemons()[reponsePokemon1].getHp() + ") choisit une attaque...");
@@ -49,9 +51,13 @@ public class ChasseAuxPokemon {
 				ben.getPokemons()[reponsePokemon2].utiliserAttaque(reponseAttaquePokemon2, ben.getPokemons()[reponsePokemon1]);
 				if (ben.getPokemons()[reponsePokemon1].etreEvanoui()) {
 					System.out.println("### Combat termine ! " + ben.getPokemons()[reponsePokemon1].getNom() + " est KO... ###");
+					ben.getPokemons()[reponsePokemon1].rechargerAttaques();
+					ben.getPokemons()[reponsePokemon2].rechargerAttaques();
 				}
 			}
 		}
+
+		scanner.close();
 
 
 
