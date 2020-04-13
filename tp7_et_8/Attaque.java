@@ -28,7 +28,7 @@ public abstract class Attaque {
     }
 
     public void baisserNombreRepetitions() {
-        this.repetitionsRestantes--;
+        this.repetitionsRestantes -= 1;
         if (this.repetitionsRestantes < 0) {
             this.repetitionsRestantes = 0;
         }

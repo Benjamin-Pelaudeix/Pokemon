@@ -10,7 +10,7 @@ public class Outil extends Item implements ChangerItems {
     public void changer(Modifiable item) {
         if (item != null && this.getUtilisationsRestantes() > 0) {
             item.modifier();
-            this.utilisationsRestantes--;
+            this.baisserUtilisationsRestantes(1);
         }
     }
 

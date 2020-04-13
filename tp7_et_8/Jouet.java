@@ -36,7 +36,7 @@ public class Jouet extends Item implements Utilisable, Modifiable {
             if (joueur.getPokemons()[indexPokemon] != null && this.getUtilisationsRestantes() > 0) {
                 joueur.getPokemons()[indexPokemon].monterAppetit(this.apportAppetit);
                 joueur.getPokemons()[indexPokemon].monterLoyaute(this.apportLoyaute);
-                this.utilisationsRestantes--;
+                this.baisserUtilisationsRestantes(1);
             }
         }
     }

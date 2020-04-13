@@ -5,6 +5,8 @@ public class Nourriture extends Item implements Utilisable {
     private int apport;
     private String[] compatibilites;
 
+    public static final String[] tousLesTypesDePokemons = new String[]{"Acier", "Combat", "Dragon", "Eau", "Electrique", "Fee", "Feu", "Glace", "Insecte", "Normal", "Plante", "Poison", "Psy", "Roche", "Sol", "Spectre", "Tenebres", "Vol"};
+
     public Nourriture(String nom, int frequence, int apport, String[] compatibilites) {
         super(nom, frequence, 1);
         this.apport = apport;
@@ -23,7 +25,7 @@ public class Nourriture extends Item implements Utilisable {
 
     @Override
     public void utiliser(Joueur joueur, int indexPokemon) {
-        if (joueur != null && (indexPokemon >= 0 || indexPokemon <= joueur.getPokemons().length)) {
+        if (joueur != null && indexPokemon >= 0 && indexPokemon <= joueur.getPokemons().length) {
             if (joueur.getPokemons()[indexPokemon] != null) {
                 if (isCompatible(joueur.getPokemons()[indexPokemon]) && this.getUtilisationsRestantes() < 0) {
                     joueur.getPokemons()[indexPokemon].baisserAppetit(this.apport);
@@ -35,12 +37,12 @@ public class Nourriture extends Item implements Utilisable {
 
     public boolean isCompatible(Pokemon pokemon) {
         boolean compatible = false;
-        if (pokemon != null) {
-            for (int i = 0; i<this.compatibilites.length; i++) {
-                if (this.compatibilites[i].equals(pokemon.getType())) {
-                    compatible = true;
-                }
+        int i = 0;
+        while (pokemon != null && i < this.compatibilites.length && !compatible) {
+            if (this.compatibilites[i].equals(pokemon.getType())) {
+                compatible = true;
             }
+            i++;
         }
         return compatible;
     }

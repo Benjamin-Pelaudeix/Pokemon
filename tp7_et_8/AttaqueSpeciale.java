@@ -14,13 +14,13 @@ public class AttaqueSpeciale extends Attaque {
     public void utiliserAttaque(Pokemon attaquant, Pokemon victime) {
         if (attaquant != null && victime != null) {
             if (repetitionsRestantes > 0) {
-                int aleatoireAttaque = random.nextInt(attaquant.getAttaqueSpeciale());
-                int aleatoireVictime = random.nextInt(victime.getDefenseSpeciale());
-                if (attaquant.getAttaqueSpeciale() + aleatoireAttaque > victime.getDefenseSpeciale() + aleatoireVictime) {
-                    precision = random.nextInt(100);
+                int aleatoireAttaque = random.nextInt(attaquant.getAttaque() + 1);
+                int aleatoireVictime = random.nextInt(victime.getDefense() + 1);
+                int precision = random.nextInt(101);
+                if (attaquant.getAttaque() + aleatoireAttaque > victime.getDefense() + aleatoireVictime) {
                     victime.blessure(random.nextInt(puissance));
+                    this.baisserNombreRepetitions();
                 }
-                repetitionsRestantes--;
             }
         }
     }

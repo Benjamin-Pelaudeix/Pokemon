@@ -56,6 +56,6 @@ public abstract class Item {
 
     @Override
     public String toString() {
-        return this.nom + " : " + this.frequence + ", " + this.utilisationsRestantes + "/" + this.nombreUtilisations;
+        return this.nom + " : " + this.frequence + ", " + this.getUtilisationsRestantes() + "/" + this.nombreUtilisations;
     }
 }

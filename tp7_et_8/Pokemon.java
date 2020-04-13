@@ -109,16 +109,16 @@ public class Pokemon {
 		}
 	}
 	
-	public void manger(Nourriture nourriture) {
-		if (nourriture != null && nourriture.isCompatible(this)) {
-			nourriture.estMangee(this);
-		}
-		else {
-			if (nourriture == null) {
-				System.out.println("Il n'y a pas de nourriture...");
+	public void utiliser(Utilisable item) {
+		if (item != null) {
+			if (this.getMonJoueur() != null) {
+				int index = this.getMonJoueur().trouverPokemon(this);
+				if (index != -1) {
+					this.utiliser(item);
+				}
 			}
-			if (!nourriture.isCompatible(this)) {
-				System.out.println("La nourriture n'est pas compatible avec ce Pokemon...");
+			else {
+				System.out.println("Ce pokemon n'a pas de maitre.. Il ne peut pas recevoir des objets utilisables.");
 			}
 		}
 	}

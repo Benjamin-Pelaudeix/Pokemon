@@ -8,50 +8,50 @@ public class ChasseAuxPokemon {
 	public static void main(String[] args) {
 		
 		//instantiation
-		Pokemon piplup = new Pokemon("Piplup", "Eau", 5, true, 51, 53, 61, 56, new Attaque[]{new AttaqueMorsure(), new AttaquePistoleEau(), new AttaqueEnfer(), null}); //erreur dans l'instanciation car nous avons changé les constructeurs de cette classe
+		Pokemon piplup = new Pokemon("Piplup", "Eau", 5, true, 51, 53, 61, 56, new Attaque[]{new AttaqueMorsure(), new AttaquePistoleEau(), null, null}); //erreur dans l'instanciation car nous avons changé les constructeurs de cette classe
 		Pokemon rowlet = new Pokemon("Rowlet", "Plante", 10, false, 55, 55, 50, 50, new Attaque[]{new AttaqueMorsure(), new AttaqueTornadeFeuilles(), null, null});
 		Pokemon totodile = new Pokemon("Totodile", "Eau", 8, true, 65, 64, 44, 48, new Attaque[]{new AttaqueMorsure(), new AttaquePistoleEau(), null, null});
-		Nourriture tartiflette = new Nourriture(35, "Tartiflette", new String[]{"Dragon", "Feu", "Combat", "Normal", "Eau", "Electrique"}, 20);
-		Nourriture ratatouille = new Nourriture(10, "Ratatouille", new String[]{"Plante", "Eau", "Vol", "Feu", "Normal", "Electrique"}, 50);
-		Gourmandise barreChocolat = new Gourmandise(20, "Barre au chocolat", new String[]{"Eau", "Feu", "Vol"}, 10, 7);
+		Nourriture tartiflette = new Nourriture("Tartiflette", 35, 20, new String[]{"Dragon", "Feu", "Combat", "Normal", "Eau", "Electrique"});
+		Nourriture ratatouille = new Nourriture("Ratatouille", 10, 50, new String[]{"Plante", "Eau", "Vol", "Feu", "Normal", "Electrique"});
+		Gourmandise barreChocolat = new Gourmandise("Barre au chocolat", 20, 10, new String[]{"Eau", "Feu", "Vol"}, 7);
 		PotionMagique mojito = new PotionMagique("Mojito", 2);
-		Joueur ben = new Joueur("Pelaudeix", "Benjamin", 19, new Pokemon[]{piplup, rowlet, totodile}, new Nourriture[]{null, null, null, null, null});
-		Scanner scanner = new Scanner(System.in);
+		Jouet balle = new Jouet("Balle",20,10,10,5);
+		Outil marteau = new Outil("Le Petit Marteau des Merveilles", 10,2);
+		Joueur ben = new Joueur("Pelaudeix", "Benjamin", 19, new Pokemon[]{piplup,rowlet,totodile}, new Item[15]);
 
 		//instanciation tableau
 		Nourriture[] diversesNourritures = new Nourriture[] {tartiflette, ratatouille, barreChocolat, mojito};
 
-		//si on ajoute des attaques spéciales non compatibles : un message d'erreur va s'afficher et l'attaque ne sera pas ajoutée au pokemon.
+		ben.ajouterItem(balle);
 
-		System.out.println("### Combat ###\n### Choisissez 2 pokemons ###\nPokemon 1:");
-		int reponsePokemon1 = scanner.nextInt();
-		System.out.println("Pokemon 2:");
-		int reponsePokemon2 = scanner.nextInt();
-		while (reponsePokemon1 < 0 || reponsePokemon1 > ben.getPokemons().length || reponsePokemon2 < 0 || reponsePokemon2 > ben.getPokemons().length || reponsePokemon1 == reponsePokemon2) {
-			System.out.println("Saisies non valides... Veuillez recommencer !\nPokemon 1:");
-			reponsePokemon1 = scanner.nextInt();
-			System.out.println("Pokemon 2:");
-			reponsePokemon2 = scanner.nextInt();
-		}
-		System.out.println("### Vous engagez un combat entre " + ben.getPokemons()[reponsePokemon1].getNom() + " et " + ben.getPokemons()[reponsePokemon2].getNom() + " ###");
-		while (ben.getPokemons()[reponsePokemon1].etreEvanoui() == false && ben.getPokemons()[reponsePokemon2].etreEvanoui() == false) {
-			System.out.println(ben.getPokemons()[reponsePokemon1].getNom() + " (HP : " + ben.getPokemons()[reponsePokemon1].getHp() + ") choisit une attaque...");
-			ben.getPokemons()[reponsePokemon1].afficherEtatAttaques();
-			int reponseAttaquePokemon1 = scanner.nextInt();
-			ben.getPokemons()[reponsePokemon1].utiliserAttaque(reponseAttaquePokemon1, ben.getPokemons()[reponsePokemon2]);
-			if (ben.getPokemons()[reponsePokemon2].etreEvanoui()) {
-				System.out.println("### Combat termine ! " + ben.getPokemons()[reponsePokemon2].getNom() + " est KO... ###");
-			}
-			else {
-				System.out.println(ben.getPokemons()[reponsePokemon2].getNom() + " (HP : " + ben.getPokemons()[reponsePokemon1].getHp() + ") choisit une attaque...");
-				ben.getPokemons()[reponsePokemon2].afficherEtatAttaques();
-				int reponseAttaquePokemon2 = scanner.nextInt();
-				ben.getPokemons()[reponsePokemon2].utiliserAttaque(reponseAttaquePokemon2, ben.getPokemons()[reponsePokemon1]);
-				if (ben.getPokemons()[reponsePokemon1].etreEvanoui()) {
-					System.out.println("### Combat termine ! " + ben.getPokemons()[reponsePokemon1].getNom() + " est KO... ###");
-				}
-			}
-		}
+		ben.afficherSac();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
