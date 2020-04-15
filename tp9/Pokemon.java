@@ -1,10 +1,11 @@
 package tp9;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 
-
 public class Pokemon {
+	
 	private String nom;
 	private String type;
 	private int niveau;
@@ -13,21 +14,14 @@ public class Pokemon {
 	private Joueur monJoueur;
 	private int appetit;
 	private int loyaute;
-	
-	// ajoutes en TP 6
-	
 	private int attaque;
 	private int defense;
 	private int attaqueSpeciale;
 	private int defenseSpeciale;
 	private int hp;
-	
 	private List<Attaque> attaques = new ArrayList<Attaque>();
-	
-	public Pokemon(String nom, String type, int niveau, 
-			boolean diurne, String nomDonne, Joueur monJoueur,
-			int attaque, int defense, int attaqueSpeciale, 
-			int defenseSpeciale, Attaque[] attaques) {
+
+	public Pokemon(String nom, String type, int niveau, boolean diurne, String nomDonne, Joueur monJoueur, int attaque, int defense, int attaqueSpeciale, int defenseSpeciale, List<Attaque> attaques) {
 		this.nom = nom;
 		this.type = type;
 		this.niveau = niveau;
@@ -36,180 +30,175 @@ public class Pokemon {
 		this.monJoueur = monJoueur;
 		this.appetit = 50;
 		this.loyaute = 0;
-		
-		// ajoutees en TP 6
 		this.attaque = attaque;
 		this.defense = defense;
 		this.attaqueSpeciale = attaqueSpeciale;
 		this.defenseSpeciale = defenseSpeciale;
-		this.hp = 30; 
-		
-		for(int i = 0; i < attaques.length; i++) {
-			this.ajouterAttaque(attaques[i]);;
+		this.hp = 30;
+		for (int i = 0; i < attaques.size(); i++) {
+			if (attaques.get(i) != null) {
+				this.ajouterAttaque(attaques.get(i));
+			}
+			if (attaques.size() > 4) {
+				System.out.println("Liste trop longue ! Seules les 4 premières attaques ont été prises en compte.");
+			}
 		}
-		
-		if (attaques.length > 4) {
-			System.err.println("Liste trop longue, j'ai seulement pris en compte les 4 premieres attaques.");
-		}
 	}
-	
-	public Pokemon(String nom, String type, int age, boolean diurne,int attaque, int defense, int attaqueSpeciale, 
-			int defenseSpeciale, Attaque[] attaques) {
-		this(nom, type, age, diurne, null, null, attaque, defense, attaqueSpeciale,defenseSpeciale, attaques);
+
+	public Pokemon(String nom, String type, int niveau, boolean diurne, int attaque, int defense, int attaqueSpeciale, int defenseSpeciale, List<Attaque> attaques) {
+		this(nom, type, niveau, diurne, null, null, attaque, defense, attaqueSpeciale, defenseSpeciale, attaques);
 	}
-	
-	
-	@SuppressWarnings("unused")
-	private int trouverAttaque(Attaque attaque) {
-		
-		return this.attaques.indexOf(attaque);
-	}
-	
-	public void ajouterAttaque(Attaque attaque) {
-		if (attaque.isCompatible(this)) {
-			if (this.attaques.size()<=4) {
-				this.attaques.add(attaque);
+
+	public void direBonjour(String periode) {
+		if (periode.equals("jour")) {
+			if (this.diurne == true) {
+				System.out.println(nom + " dit : 'Bonjour !'");
 			}
 			else {
-				System.err.println("Trop d'attaques deja dans la liste d'attaques !");
+				System.out.println(nom + " dort : 'Zzzzzz !'");
 			}
-			
+		}
+		if (periode.equals("nuit")) {
+			if (this.diurne == true) {
+				System.out.println(nom + " dort : 'Zzzzzz !'");
+			}
+			else {
+				System.out.println(nom + " dit : 'Bonjour !'");
+			}
 		}
 	}
 	
+	public void sePresenter() {
+		System.out.println("Voici un pokemon " + this.nom + " de niveau " + this.niveau);
+		if (this.monJoueur != null) {
+			System.out.println("Il appartient a " + this.monJoueur);
+			if (this.nomDonne != null) {
+				System.out.println("Il s'appelle " + this.nomDonne);
+			}
+		}
+	}
+	
+	public void baisserAppetit(int difference) {
+		if (this.appetit - difference > 0) {
+			this.appetit -= difference;
+		}
+		else {
+			this.appetit = 0;
+		}
+	}
+	
+	public void monterAppetit(int difference) {
+		if (this.appetit + difference < 100) {
+			this.appetit += difference;
+		}
+		else {
+			this.appetit = 100;
+		}
+	}
+	
+	public void baisserLoyaute(int difference) {
+		if (this.loyaute - difference > 0) {
+			this.loyaute -= difference;
+		}
+		else {
+			this.loyaute = 0;
+		}
+	}
+	
+	public void monterLoyaute(int difference) {
+		if (this.loyaute + difference < 100) {
+			this.loyaute += difference;
+		}
+		else {
+			this.appetit = 100;
+		}
+	}
+	
+	public void utiliser(Utilisable item) {
+		if (item != null) {
+			if (this.getMonJoueur() != null) {
+				int index = this.getMonJoueur().trouverPokemon(this);
+				if (index != -1) {
+					this.utiliser(item);
+				}
+			}
+			else {
+				System.out.println("Ce pokemon n'a pas de maitre.. Il ne peut pas recevoir des objets utilisables.");
+			}
+		}
+	}
+
+	private int trouverAttaque(Attaque attaque) {
+		int position = -1;
+		for (int i = 0; i < attaques.size(); i++) {
+			if (attaques.get(i) == attaque){
+				return i;
+			}
+		}
+		return position;
+	}
+
+	public void ajouterAttaque(Attaque attaque) {
+		if (attaque.isCompatible(this) && attaques.contains(null)) {
+			attaques.set(trouverAttaque(null), attaque);
+		}
+		else {
+			System.out.println("Votre pokemon n'est pas compatible ou il n'a plus de place dans ses attaques....");
+		}
+	}
+
 	public void ajouterAttaque(Attaque attaque, int i) {
-		if(i >= 0 && i < 4) {
-			if (attaque.isCompatible(this)) {
-				this.attaques.add(i, attaque);
+		if (i >= 0 && i < attaques.size()) {
+			this.attaques.set(i, attaque);
+		}
+		else {
+			System.out.println("Vous êtes hors de l'intervalle 0-" + this.attaques.size());
+		}
+	}
+
+	public void rechargerAttaques() {
+		for (int i =0; i < attaques.size(); i++) {
+			if (this.attaques.get(i) != null) {
+				this.attaques.get(i).resetNombreRepetitions();
 			}
 		}
 	}
-	
-	public void rechargerAttaques() {
-        for (Attaque attaque : attaques) {
-            if(null != attaque) {
-                attaque.resetNombreRepetitions();
-            }
-        }
-    }
-	
+
 	public void blessure(int dommage) {
 		this.hp -= dommage;
 		if (this.hp < 0) {
 			this.hp = 0;
 		}
 	}
-	
-	public boolean sEstEvanoui() {
-		return (this.hp == 0);
-	}
-	
-	public void utiliserAttaque(int index, Pokemon victime) {
-		if(! this.sEstEvanoui() && index >= 0 && index < this.attaques.size() && null != this.attaques.get(index)) {
-			this.attaques.get(index).utiliserAttaque(this, victime);
-		
-		}
-	}
-	
-	public void afficherEtatAttaques() {
-		String attaques = "";
-		for(int i = 0; i < this.attaques.size(); i++) {
-			if (null != this.attaques.get(i)) {
-				attaques += i + " : " + this.attaques.get(i).getNom() + ", " + this.attaques.get(i).getRepetitionsRestantes() + "/" + this.attaques.get(i).getNombreRepetitions() + "\n"; 
-			}
-		}
-		System.out.println(attaques);
-	}
-	
-	public void utiliser(Utilisable item) {
-		if(null != item) {
-			if (null != this.monJoueur) {
-				int index = this.monJoueur.trouverPokemon(this);
-				if (index != -1) {
-					item.utiliser(this.monJoueur, index);
-					System.out.println("Ce pokemon a utilise cet item !");
-				}
-				else {
-					System.out.println("Vous n'etes pas le maitre de ce pokemon pour lui donner des objets !");
-				}
-				
-			}
-			else {
-				System.out.println("Ce pokemon n'a pas de maitre. On ne peut pas donner des objets utilisables a un pokemon dont on n'est pas le maitre !");
-			}
-		}
-	}
 
-	public void miseANiveau() {
-		this.niveau += 1;
-	}
-
-	public String sePresente() {
-		if (null != this.monJoueur) {
-			if (null != this.nomDonne) {
-				return (this.nomDonne + "est un pokemon de genre " + this.nom + ", du type" + this.type + ", "
-						+ "qui a le niveau  " + this.niveau);
-			}
-			else {
-				return ("Voici un pokemon du genre " + this.nom + ", du type " + this.type + ", "
-						+ "qui a le niveau " + this.niveau + ". Ce pokemon appartient a " + this.monJoueur.getNom() 
-						+ this.monJoueur.getPrenom());
-			}
-		}
-		return ("Voici un pokemon du genre " + this.nom + ", du type " + this.type + ", "
-				+ "qui a le niveau " + this.niveau + ". Ce pokemon n'a pas encore de maitre.");
-	}
-	
-	public void direBonjour(String periode) {
-		if (periode.equals("jour")) {
-			if (this.diurne) {
-				System.out.println(this.nom +" dit bonjour !");
-			}
-			else {
-				System.out.println(this.nom + " dit zzzzzzzzzzzzz !");
-			}
+	public boolean etreEvanoui() {
+		if (this.hp == 0) {
+			return true;
 		}
 		else {
-			if (this.diurne) {
-				System.out.println(this.nom + " dit zzzzzzzzzzzzz !");
+			return false;
+		}
+	}
+
+	public void utiliserAttaque(int index, Pokemon victime) {
+		if (!victime.etreEvanoui() && index >= 0 && index < attaques.size()) {
+			if (attaques.get(index) != null) {
+				attaques.get(index).utiliserAttaque(this, victime);
+				System.out.println(this.nom + " utilise " + attaques.get(index).getNom());
 			}
-			else {
-				System.out.println(this.nom + " dit bonsoir !");
+		}
+	}
+
+	public void afficherEtatAttaques() {
+		for (int i = 0; i < attaques.size(); i++) {
+			if (this.attaques.get(i) != null) {
+				System.out.println(i + " : " + this.attaques.get(i).getNom() + " , " + this.attaques.get(i).getRepetitionsRestantes() + "/" + this.attaques.get(i).getNombreRepetitions());
 			}
 		}
-		
 	}
 	
-	public void monterAppetit(int difference) {
-		this.appetit+= difference;
-		if (this.appetit > 100) {
-			this.appetit = 100;
-		}
-	}
-	
-	public void baisserAppetit(int difference) {
-		this.appetit -= difference;
-		if (this.appetit < 0) {
-			this.appetit = 0;
-		}
-	}
-	
-	public void monterLoyaute(int difference) {
-		this.loyaute += difference;
-		if (this.loyaute > 100) {
-			this.loyaute = 100;
-		}
-	}
-	
-	public void baisserLoyaute(int difference) {
-		this.loyaute -= difference;
-		if (this.loyaute < 0) {
-			this.loyaute = 0;
-		}
-	}
-		
-	public String getNomDonne() {
-		return this.nomDonne;
+	public void mettreANiveau() {
+		this.niveau += 1;
 	}
 	
 	public String getNom() {
@@ -224,20 +213,16 @@ public class Pokemon {
 		return this.niveau;
 	}
 	
-	public Joueur getMonJoueur() {
-		return this.monJoueur;
-	}
-	
-	public void setNomDonne(String nomDonne) {
-		this.nomDonne = nomDonne;
-	}
-	
-	public boolean isDiurne() {
+	public boolean etreDiurne() {
 		return this.diurne;
 	}
 	
-	public void setMonJoueur(Joueur monJoueur) {
-		this.monJoueur = monJoueur;
+	public String getNomDonne() {
+		return this.nomDonne;
+	}
+	
+	public Joueur getMonJoueur() {
+		return this.monJoueur;
 	}
 	
 	public int getAppetit() {
@@ -247,53 +232,44 @@ public class Pokemon {
 	public int getLoyaute() {
 		return this.loyaute;
 	}
+
+	public int getAttaque() { return this.attaque; }
+
+	public int getDefense() { return this.defense; }
+
+	public int getAttaqueSpeciale() { return this.attaqueSpeciale;	}
+
+	public int getDefenseSpeciale() { return this.defenseSpeciale;	}
+
+	public int getHp() { return this.hp; }
+
+	public List<Attaque> getAttaques() { return this.attaques; }
+
+	public void setNomDonne(String nomDonne) { this.nomDonne = nomDonne; }
 	
-	public int getAttaque() {
-		return this.attaque;
-	}
+	public void setMonJoueur(Joueur monJoueur) { this.monJoueur = monJoueur; }
 	
-	public int getDefense() {
-		return this.defense;
-	}
+	public void setAppetit(int appetit) { this.appetit = appetit; }
 	
-	public int getAttaqueSpeciale() {
-		return this.attaqueSpeciale;
-	}
-	
-	public int getDefenseSpeciale() {
-		return this.defenseSpeciale;
-	}
-	
-	public int getHP() {
-		return this.hp;
-	}
-	
-	public List<Attaque> getAttaques() {
-		return this.attaques;
-	}
-	
+	public void setLoyaute(int loyaute) { this.loyaute = loyaute;	}
+
+	@Override
 	public String toString() {
-		String attaques = "{";
-		for (int i = 0; i < this.attaques.size()-1; i++) {
-			if (this.attaques.get(i) != null){
-				attaques += this.attaques.get(i) + ", ";
-			}
-			
-		}
-		
-		if (this.attaques.get(this.attaques.size()-1) != null){
-			attaques += this.attaques.get(this.attaques.size()-1);
-		}
-		
-		attaques += "}";
-		
-		return("[ Nom : " + this.nom + "; Type : " + this.type + "; Niveau : " 
-				+this.niveau + "; Diurne : " + this.diurne + "; nomDonne : " 
-				+this.nomDonne + "; monJoueur : " + this.monJoueur + "; Appetit :" 
-				+this.appetit + "; Loyaute :" + this.loyaute + "; Attaque" + this.attaque 
-				+ "; Defense : " + this.defense + "; AttaqueSpeciale : " 
-				+ "; DefenseSpeciale : " + this.defenseSpeciale + "; HP : " + this.hp
-				+ "; Attaques : " + attaques + "]");
+		return "Pokemon{" +
+				"nom='" + nom + '\'' +
+				", type='" + type + '\'' +
+				", niveau=" + niveau +
+				", diurne=" + diurne +
+				", nomDonne='" + nomDonne + '\'' +
+				", monJoueur=" + monJoueur +
+				", appetit=" + appetit +
+				", loyaute=" + loyaute +
+				", attaque=" + attaque +
+				", defense=" + defense +
+				", attaqueSpeciale=" + attaqueSpeciale +
+				", defenseSpeciale=" + defenseSpeciale +
+				", hp=" + hp +
+				", attaques=" + Arrays.toString(new List[]{attaques}) +
+				'}';
 	}
-	
 }

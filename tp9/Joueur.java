@@ -1,229 +1,132 @@
 package tp9;
 
 public class Joueur {
+	
 	private String nom;
 	private String prenom;
 	private int age;
 	private Pokemon[] pokemons = new Pokemon[5];
-	private Nourriture[] provisions;
+	private Nourriture[] provisions = new Nourriture[10];
 	private Item[] sac;
-	
-	public Joueur(String nom, String prenom, int age, Pokemon[] pokemons) {
+
+	public Joueur(String nom, String prenom, int age, Pokemon[] pokemons, Item[] sac) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.age = age;
-		
-		int tailleMinimale = this.pokemons.length;
-		if (pokemons.length < tailleMinimale) {
-			tailleMinimale = pokemons.length;
-		}
-		
-		for(int i = 0; i < tailleMinimale; i++) {
-			this.pokemons[i] = pokemons[i];
-		}
-		
-		this.provisions = new Nourriture[10];
+		this.pokemons = pokemons;
 		for (int i = 0; i < pokemons.length; i++) {
 			if (null!=this.pokemons[i]) {
 				this.pokemons[i].setMonJoueur(this);
 			}
-			
+
 		}
+		this.provisions = new Nourriture[10];
 		this.sac = new Item[15];
 	}
-	
+
 	public Joueur(String nom, String prenom, int age) {
-		this(nom, prenom, age, new Pokemon[] {null, null, null, null, null});
-	}
-	
-
-	public void donnerItem(int indexPokemon, int indexItem) {
-		if(indexPokemon >= 0 && indexPokemon < this.pokemons.length && indexItem >= 0 && indexItem < this.sac.length) {
-			if (null != this.pokemons[indexPokemon] && null != this.sac[indexItem]) {
-				if (this.sac[indexItem] instanceof Utilisable) {
-					Utilisable item = (Utilisable) this.sac[indexItem];
-					item.utiliser(this, indexPokemon);
-					if (this.sac[indexItem].getUtilisationsRestantes() == 0) {
-						this.sac[indexItem] = null;
-					}
-				}
-				else {
-					System.out.println("Cet item n'est pas utilisable.");
-				}
-			}
-			else {
-				System.out.println("Variable null a cet emplacement !");
-			}
-		}
-		else {
-			System.out.println("Index non-valide");
-		}
-	}
-	
-	public void modifierItem(int indexChangeur, int indexAModifier) {
-		if(indexChangeur >= 0 && indexChangeur < this.sac.length && indexAModifier >= 0 && indexAModifier < this.sac.length) {
-			if (null != this.sac[indexChangeur] && null != this.sac[indexAModifier]) {
-				if (this.sac[indexChangeur] instanceof ChangerItems && this.sac[indexAModifier] instanceof Modifiable) {
-					ChangerItems itemChangeur = (ChangerItems) this.sac[indexChangeur];
-					Modifiable itemAModifier = (Modifiable) this.sac[indexAModifier];
-					itemChangeur.changer(itemAModifier);
-					if (this.sac[indexChangeur].getNombreUtilisations() == 0) {
-						this.sac[indexChangeur] = null;
-					}
-				}
-			}
-		}
-	}
-	
-	public int trouverPokemon(Pokemon pokemon) {
-		
-		int iterateur = 0;
-		
-		while (iterateur<this.pokemons.length) {
-			if(this.pokemons[iterateur] == pokemon) {
-				return iterateur;
-			}
-			iterateur++;
-		}
-		return -1;
+		this(nom, prenom, age, new Pokemon[5], new Item[15]);
 	}
 
-	private int trouverItem(Item item) {
-		int iterateur = 0;
-		
-		while (iterateur<this.sac.length) {
-			if(this.sac[iterateur] == item) {
-				return iterateur;
-			}
-			iterateur++;
-		}
-		return -1;
+	public String getNom() {
+		return this.nom;
 	}
-	
+
+	public String getPrenom() {
+		return this.prenom;
+	}
+
+	public int getAge() {
+		return this.age;
+	}
+
+	public Pokemon[] getPokemons() {
+		return this.pokemons;
+	}
+
+	public Nourriture[] getProvisions() {
+		return this.provisions;
+	}
+
 	private int trouverProvision(Nourriture nourriture) {
-		
 		int iterateur = 0;
-		
-		while (iterateur<this.provisions.length) {
-			if(this.provisions[iterateur] == nourriture) {
+		while (iterateur < this.provisions.length) {
+			if (this.provisions[iterateur] == nourriture) {
 				return iterateur;
 			}
-			iterateur++;
 		}
 		return -1;
 	}
-	
-	public void ajouterItem(Item item) {
-		int positionLibre = this.trouverItem(null);
-		if (positionLibre != -1) {
-			this.sac[positionLibre] = item;
-		}
-		else {
-			System.out.println("Vous n'avez plus de place pour cette nourriture.");
-		}
 
-	}
-	
-	public void lacherItem(Item item) {
-		int positionLibre = this.trouverItem(item);
-		if (positionLibre != -1) {
-			this.sac[positionLibre] = null;
-		}
-		else {
-			System.out.println("Vous n'avez plus de place pour cette nourriture.");
-		}
-	}
-	
 	public void ajouterProvision(Nourriture nourriture) {
-		int positionLibre = this.trouverProvision(null);
-		if (positionLibre != -1) {
-			this.provisions[positionLibre] = nourriture;
+		if (this.trouverProvision(null) != -1) {
+			provisions[trouverProvision(null)] = nourriture;
 		}
 		else {
-			System.out.println("Vous n'avez plus de place pour cette nourriture.");
+			System.out.println("Vous n'avez plus de place dans votre sac de provision...");
+		}
+	}
+
+	public void afficherProvision() {
+		for (int i = 0; i < this.provisions.length; i++) {
+			if (this.provisions[i] != null) {
+				System.out.println(i + " : " + this.provisions[i].nom);
+			}
 		}
 	}
 
 	public void nourrirPokemon(Pokemon pokemon, Nourriture nourriture) {
-		if (pokemon == null || nourriture == null || this.trouverPokemon(pokemon) == -1 || this.trouverProvision(nourriture) == -1) {
-			System.out.println("Parametres non valides.");
+		if (pokemon == null || nourriture == null || pokemon.getMonJoueur() != this) {
+			System.out.println("Vous ne pouvez pas nourrir ce pokemon...");
 		}
 		else {
 			pokemon.utiliser(nourriture);
-			this.provisions[this.trouverProvision(nourriture)] = null;
+			System.out.println(pokemon + " mange " + nourriture);
+			provisions[trouverProvision(nourriture)] = null;
+			System.out.println(nourriture + " a ete retiree de votre sac");
 		}
-	}
-	
-	public void afficherProvisions() {
-		for (int i = 0; i < this.provisions.length; i++) {
-			if (null != this.provisions[i]) {
-				System.out.println(i + " : " + this.provisions[i]);
-			}
-		}
-	}
-	
-	public void afficherSac() {
-		for (int i = 0; i < this.sac.length; i++) {
-			if (null != this.sac[i]) {
-				System.out.println(i + " : " + this.sac[i]);
-			}
-		}
-	}
-	
-	public void caresserPokemon(Pokemon pokemon) {
-		if (null != pokemon && this == pokemon.getMonJoueur()) {
-			pokemon.monterLoyaute(1);
-			if (pokemon.getLoyaute() == 100) {
-				System.out.println("Oui, moi je t'aime aussi !");
-			}
-			else {
-				System.out.println("Mmmm, ca sent bien ! Et sous mon oreille gauche ?");
-			}
-		}
-	}
-	
-	public void capturerPokemon(Pokemon pokemon) {
-		if (pokemon.getMonJoueur()!=null ) {
-			System.out.println("Vous ne pouvez pas capturer le pokemon d'un autre joueur.");
-		}
-		else {
-			int premierePlaceDisponible = this.trouverPokemon(null);
-			if (premierePlaceDisponible != -1) {
-				this.pokemons[premierePlaceDisponible] = pokemon;
-				System.out.println("Ce pokemon devient la propriete du joueur " + this.nom);
-				pokemon.setMonJoueur(this);
-				pokemon.baisserLoyaute(100); // car la methode en question remet la valeur a zero si le resultat est negatif
-				pokemon.baisserAppetit(100);
-				pokemon.monterAppetit(10);
-			}
-			else {
-				System.out.println("Vous n'avez pas la place pour accueillir ce pokemon ! Vous devrez renoncer a un autre pokemon pour capturer celui-ci.");
-			}
-		}
-		
 	}
 
-	public void libererPokemon(Pokemon pokemon) {
-		int positionPokemon = this.trouverPokemon(pokemon);
-		if(positionPokemon != -1) {
-			this.pokemons[positionPokemon] = null;
-			System.out.println("Ce pokemon n'est plus la propriete du joueur " + this.nom);
-			pokemon.setMonJoueur(null);
-			pokemon.setNomDonne(null);
-			pokemon.baisserLoyaute(100); // car la methode en question remet la valeur a zero si le resultat est negative
-			pokemon.baisserAppetit(100);
-			pokemon.monterAppetit(10);
+	public int trouverPokemon(Pokemon pokemon) {
+		boolean pokemonTrouve = false;
+		int i = 0;
+
+		while (i<this.pokemons.length && !pokemonTrouve) {
+			if(this.pokemons[i]==pokemon) {
+				return i;
+			}
+			i++;
+		}
+		return -1;
+	}
+
+	//Question 3- On peut utiliser la methode trouverPokemon pour trouver une place disponible dans notre tableau de Pok�mon en specifiant en entrer la reference memoire "null".
+
+	public void capturer(Pokemon pokemon) {
+		if ((pokemon.getMonJoueur() == null) && trouverPokemon(null) != -1) {
+			pokemon.setMonJoueur(this); //mise � jour des informations du pokemon
+			pokemon.setAppetit(10);
+			pokemon.setLoyaute(0);
+			pokemons[trouverPokemon(null)] = pokemon;
 		}
 		else {
-			System.out.println("Vous n'etes pas le maitre de ce pokemon.");
+			System.out.println("Vous ne pouvez pas posseder un autre pok�mon... Veuillez en liberer un");
 		}
 	}
-	
-	public void donnerNom(Pokemon pokemon, String nomDonne) {
+
+	public void liberer(Pokemon pokemon) {
+		pokemons[trouverPokemon(pokemon)].setMonJoueur(null);
+		pokemons[trouverPokemon(pokemon)].setNomDonne(null);
+		pokemons[trouverPokemon(pokemon)].setAppetit(10);
+		pokemons[trouverPokemon(pokemon)].setLoyaute(0);
+		pokemons[trouverPokemon(pokemon)] = null;
+	}
+
+	public void nommer(Pokemon pokemon, String nomDonne) {
 		if (pokemon != null) {
 			int positionPokemon = this.trouverPokemon(pokemon);
 			if (positionPokemon != -1) {
-				if (null == pokemon.getNomDonne()) {
+				if (pokemon.getNomDonne() == null) {
 					pokemon.monterLoyaute(10);
 				}
 				else {
@@ -232,33 +135,93 @@ public class Joueur {
 				pokemon.setNomDonne(nomDonne);
 			}
 			else {
-				System.out.println("Vous ne pouvez pas nomme ce pokemon car vous n'etes pas son maitre !");
+				System.out.println("Vous ne pouvez pas nommer ce pokemon car vous n'etes pas son maitre !");
 			}
 		}
 	}
-		
-	public String getNom() {
-		return this.nom;
-	}
 	
-	public String getPrenom() {
-		return this.prenom;
-	}
-	
-	public Pokemon[] getPokemons() {
-		return this.pokemons;
-	}
-	
-	public Nourriture[] getProvisions() {
-		return this.provisions;
-	}
-	
-	public Item[] getSac() {
-		return this.sac;
-	}
-	
-	public String toString() {
-		return ("[ Nom : " + this.nom + "; prenom : " + this.prenom + "; age" + this.age + " ]");
+	public void caresserPokemon (Pokemon pokemon) {
+		if (pokemon.getMonJoueur() != this) {
+			System.out.println("Ce pokemon ne t'appartient pas... Tu ne peux pas le caresser !");
+		}
+		else
+		{
+			if (pokemon.getLoyaute() + 1 < 100) {
+				System.out.println("Mmmm, ca sent bon. Et sous mon oreille gauche ?");
+			}
+			else {
+				System.out.println("Oui, moi aussi je t'aime !");
+			}
+		}
 	}
 
+	public void donnerItem (int indexPokemon, int indexItem) {
+		if ((indexPokemon > 0 && indexPokemon < this.getPokemons().length) && (indexItem > 0 && indexItem < this.getSac().length)) {
+			if (this.getPokemons()[indexPokemon] != null && this.getSac()[indexItem] != null) {
+				if (this.sac[indexItem] instanceof Utilisable) {
+					if (this.sac[indexItem].getUtilisationsRestantes() > 0) {
+						Utilisable item = (Utilisable)this.sac[indexItem];
+						this.getPokemons()[indexPokemon].utiliser(item);
+					}
+					else {
+						this.sac[indexItem] = null;
+					}
+				}
+			}
+		}
+	}
+
+	public void modifierItem (int indexChangeur, int indexAModifier) {
+		if ((indexChangeur > 0 && indexChangeur < this.getSac().length) && (indexAModifier > 0 && indexAModifier < this.getSac().length)) {
+			if (this.sac[indexChangeur] instanceof ChangerItems && this.sac[indexAModifier] instanceof Modifiable) {
+				if (this.sac[indexChangeur].getUtilisationsRestantes() > 0) {
+					Modifiable item = (Modifiable)this.sac[indexAModifier];
+					item.modifier();
+				}
+				else {
+					this.sac[indexChangeur] = null;
+				}
+			}
+		}
+	}
+
+	public int trouverItem (Item item) {
+		int iterateur = 0;
+		while (iterateur < this.sac.length) {
+			if (this.sac[iterateur] == item) {
+				return iterateur;
+			}
+		}
+		return -1;
+	}
+
+	public void ajouterItem (Item item) {
+		if (trouverItem(null) != -1) {
+			this.sac[trouverItem(null)] = item;
+		}
+	}
+
+	public void lacherItem (Item item) {
+		if (trouverItem(item) != -1) {
+			this.sac[trouverItem(item)] = null;
+		}
+	}
+
+	public void afficherSac() {
+		String affichageSac = "Contenu du sac : ";
+		for (int i = 0; i < this.sac.length; i++) {
+			if (this.sac[i] != null) {
+				affichageSac += this.sac[i] + ", ";
+			}
+		}
+		System.out.println(affichageSac);
+	}
+
+	public String toString() {
+		return this.prenom;
+	}
+
+	public Item[] getSac() {
+		return sac;
+	}
 }

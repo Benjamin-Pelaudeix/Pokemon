@@ -2,10 +2,9 @@ package tp9;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ChasseAuxPokemon {
@@ -13,42 +12,54 @@ public class ChasseAuxPokemon {
 	
 	public static void main(String[] args) {
 
-		//initialisation
-		HashMap<String, Attaque> mappeAttaque = new HashMap<String, Attaque>();
-		mappeAttaque.put("tackle", new AttaqueTackle());
-		mappeAttaque.put("morsure",new AttaqueMorsure());
-		mappeAttaque.put("pistoleEau", new AttaquePistoleEau());
-		mappeAttaque.put("enfer", new AttaqueEnfer());
-		mappeAttaque.put("feinte",new AttaqueFeinte());
-		mappeAttaque.put("tornadeFeuiles", new AttaqueTornadeFeuilles());
-		mappeAttaque.put("coupTete", new AttaqueCoupDeTete());
-		mappeAttaque.put("croquer", new AttaqueCroquer());
-		mappeAttaque.put("bulle", new AttaqueBulle());
-		ArrayList<Pokemon> pokemonsUtilises = new ArrayList<>();
-
-		try {
-			FileReader source = new FileReader("./tp9/jeuPokemon.txt");
+		final Map<String, Attaque> mappeAttaque  = new HashMap<String, Attaque>();
+		
+		mappeAttaque .put("tackle", new AttaqueTackle());
+		mappeAttaque .put("morsure", new AttaqueMorsure());
+		mappeAttaque .put("pistoleEau", new AttaquePistoleEau());
+		mappeAttaque .put("enfer", new AttaqueEnfer());
+		mappeAttaque .put("feinte", new AttaqueFeinte());
+		mappeAttaque .put("tornadeFeuilles", new AttaqueTornadeFeuilles());
+		mappeAttaque .put("bulle", new AttaqueBulle());
+		mappeAttaque.put("coupDeTete", new AttaqueCoupDeTete());
+		
+			 //C:\Users\fnec\eclipse-workspace\tp9bis\src\tp9
+		
+		final ArrayList<Pokemon> pokemonsUtilises = new ArrayList<>();
+		
+		try(FileReader source = new FileReader("./tp9/jeuPokemon.txt"))
+		{
 			Scanner s = new Scanner(source);
-			while (s.hasNext()) {
-				String nom = s.next();
+			while(s.hasNext()) {
+				String name = s.next();
 				String type = s.next();
-				int level = s.nextInt();
+				int niveau = s.nextInt();
 				boolean diurne = s.nextBoolean();
 				int attaque = s.nextInt();
 				int defense = s.nextInt();
 				int attaqueSpeciale = s.nextInt();
 				int defenseSpeciale = s.nextInt();
-				ArrayList<Attaque> attaques = new ArrayList<Attaque>();
-				int i = 0;
-				while (i < 4 && !s.next().equals("END")) {
-					attaques.add(i,mappeAttaque.get(s.next()));
-					i++;
+				
+				ArrayList<Attaque> attaques  = new ArrayList<>();
+				
+				String nomAttaque = s.next();
+				while(!nomAttaque.equals("END")) {
+					
+					attaques .add(mappeAttaque.get(nomAttaque).genererMemeAttaque(true));
+					
+					nomAttaque = s.next();
 				}
-				pokemonsUtilises.add(new Pokemon(nom,type,level,diurne,attaque,defense,attaqueSpeciale,defenseSpeciale,attaques));
-				source.close();
+				
+				Attaque[] sesAttaques = new Attaque[attaques.size()];
+				
+				for(int i = 0; i< attaques.size(); i++) {
+					sesAttaques[i] = attaques.get(i);
+				}
+				pokemonsUtilises.add(new Pokemon(name, type, niveau, diurne, attaque, defense, attaqueSpeciale, 
+						defenseSpeciale, sesAttaques));
 			}
 		}
-		catch(IOException e) {
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 

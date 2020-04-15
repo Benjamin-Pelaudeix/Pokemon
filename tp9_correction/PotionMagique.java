@@ -20,7 +20,7 @@ public class PotionMagique extends Nourriture {
     public void utiliser(Joueur joueur, int indexPokemon) {
         super.utiliser(joueur, indexPokemon);
         if (joueur.getPokemons()[indexPokemon] != null) {
-            joueur.getPokemons()[indexPokemon].mettreANiveau();
+            joueur.getPokemons()[indexPokemon].miseANiveau();
             this.baisserUtilisationsRestantes(1);
         }
     }
