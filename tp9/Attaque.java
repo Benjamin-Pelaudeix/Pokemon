@@ -1,5 +1,7 @@
 package tp9;
 
+import java.lang.reflect.Array;
+
 import static tp6.Nourriture.tousLesTypesDePokemons;
 
 public abstract class Attaque {
@@ -41,6 +43,11 @@ public abstract class Attaque {
     public abstract Attaque genererMemeAttaque(boolean generer);
 
     public String toString() {
+        String compatibilites = "";
+        for (int i = 0; i<this.compatibilites.length-1;i++) {
+            compatibilites += this.compatibilites[i] + ", ";
+        }
+        compatibilites += this.compatibilites[this.compatibilites.length-1];
         return (this.nom + " : " + this.puissance + ", " + this.precision + ", " + this.repetitionsRestantes + "/" + this.nombreRepetitions + ", { " + compatibilites + " }");
     }
 

@@ -1,5 +1,6 @@
 package tp9;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -11,10 +12,10 @@ import java.util.Scanner;
 public class ChasseAuxPokemon {
 
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 
 		//initialisation
-		HashMap<String, Attaque> mappeAttaque = new HashMap<String, Attaque>();
+		final HashMap<String, Attaque> mappeAttaque = new HashMap<String, Attaque>();
 		mappeAttaque.put("tackle", new AttaqueTackle());
 		mappeAttaque.put("morsure",new AttaqueMorsure());
 		mappeAttaque.put("pistoleEau", new AttaquePistoleEau());
@@ -24,29 +25,31 @@ public class ChasseAuxPokemon {
 		mappeAttaque.put("coupTete", new AttaqueCoupDeTete());
 		mappeAttaque.put("croquer", new AttaqueCroquer());
 		mappeAttaque.put("bulle", new AttaqueBulle());
+
 		ArrayList<Pokemon> pokemonsUtilises = new ArrayList<>();
 
 		try {
 			FileReader source = new FileReader("./tp9/jeuPokemon.txt");
 			Scanner s = new Scanner(source);
-			while (s.hasNext()) {
+			while (s.hasNextLine()) {
 				String nom = s.next();
 				String type = s.next();
-				int level = s.nextInt();
+				int niveau = s.nextInt();
 				boolean diurne = s.nextBoolean();
 				int attaque = s.nextInt();
 				int defense = s.nextInt();
 				int attaqueSpeciale = s.nextInt();
 				int defenseSpeciale = s.nextInt();
-				ArrayList<Attaque> attaques = new ArrayList<Attaque>();
-				int i = 0;
-				while (i < 4 && !s.next().equals("END")) {
-					attaques.add(i,mappeAttaque.get(s.next()));
-					i++;
+				Attaque[] attaques = new Attaque[4];
+				for (int i = 0; i < 4; i++) {
+					if (i < 4) {
+						attaques[i] = mappeAttaque.get(s.next());
+					}
 				}
-				pokemonsUtilises.add(new Pokemon(nom,type,level,diurne,attaque,defense,attaqueSpeciale,defenseSpeciale,attaques));
-				source.close();
+				pokemonsUtilises.add(new Pokemon(nom, type, niveau, diurne, attaque, defense, attaqueSpeciale, defenseSpeciale, attaques));
+				s.nextLine();
 			}
+			s.close();
 		}
 		catch(IOException e) {
 			e.printStackTrace();

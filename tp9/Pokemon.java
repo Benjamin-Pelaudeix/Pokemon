@@ -21,7 +21,7 @@ public class Pokemon {
 	private int hp;
 	private List<Attaque> attaques = new ArrayList<Attaque>();
 
-	public Pokemon(String nom, String type, int niveau, boolean diurne, String nomDonne, Joueur monJoueur, int attaque, int defense, int attaqueSpeciale, int defenseSpeciale, List<Attaque> attaques) {
+	public Pokemon(String nom, String type, int niveau, boolean diurne, String nomDonne, Joueur monJoueur, int attaque, int defense, int attaqueSpeciale, int defenseSpeciale, Attaque[] attaques) {
 		this.nom = nom;
 		this.type = type;
 		this.niveau = niveau;
@@ -35,23 +35,21 @@ public class Pokemon {
 		this.attaqueSpeciale = attaqueSpeciale;
 		this.defenseSpeciale = defenseSpeciale;
 		this.hp = 30;
-		for (int i = 0; i < attaques.size(); i++) {
-			if (attaques.get(i) != null) {
-				this.ajouterAttaque(attaques.get(i));
-			}
-			if (attaques.size() > 4) {
-				System.out.println("Liste trop longue ! Seules les 4 premières attaques ont été prises en compte.");
-			}
+		for (int i = 0; i < attaques.length; i++) {
+				this.ajouterAttaque(attaques[i]);
+		}
+		if (attaques.length > 4) {
+			System.err.println("Liste trop longue ! Seules les 4 premières attaques ont été prises en compte.");
 		}
 	}
 
-	public Pokemon(String nom, String type, int niveau, boolean diurne, int attaque, int defense, int attaqueSpeciale, int defenseSpeciale, List<Attaque> attaques) {
+	public Pokemon(String nom, String type, int niveau, boolean diurne, int attaque, int defense, int attaqueSpeciale, int defenseSpeciale, Attaque[] attaques) {
 		this(nom, type, niveau, diurne, null, null, attaque, defense, attaqueSpeciale, defenseSpeciale, attaques);
 	}
 
 	public void direBonjour(String periode) {
 		if (periode.equals("jour")) {
-			if (this.diurne == true) {
+			if (this.diurne) {
 				System.out.println(nom + " dit : 'Bonjour !'");
 			}
 			else {
@@ -59,7 +57,7 @@ public class Pokemon {
 			}
 		}
 		if (periode.equals("nuit")) {
-			if (this.diurne == true) {
+			if (this.diurne) {
 				System.out.println(nom + " dort : 'Zzzzzz !'");
 			}
 			else {
@@ -129,30 +127,26 @@ public class Pokemon {
 	}
 
 	private int trouverAttaque(Attaque attaque) {
-		int position = -1;
-		for (int i = 0; i < attaques.size(); i++) {
-			if (attaques.get(i) == attaque){
-				return i;
-			}
-		}
-		return position;
+		return this.attaques.indexOf(attaque);
 	}
 
 	public void ajouterAttaque(Attaque attaque) {
-		if (attaque.isCompatible(this) && attaques.contains(null)) {
-			attaques.set(trouverAttaque(null), attaque);
-		}
-		else {
-			System.out.println("Votre pokemon n'est pas compatible ou il n'a plus de place dans ses attaques....");
+		if (attaque != null && attaque.isCompatible(this)) {
+			if (this.attaques.size() <= 4) {
+				attaques.add(attaque);
+			}
+			else {
+				System.err.println("Votre pokemon n'est pas compatible ou il n'a plus de place dans ses attaques....");
+			}
 		}
 	}
 
 	public void ajouterAttaque(Attaque attaque, int i) {
-		if (i >= 0 && i < attaques.size()) {
-			this.attaques.set(i, attaque);
+		if (i >= 0 && i < 4) {
+			this.attaques.add(i, attaque);
 		}
 		else {
-			System.out.println("Vous êtes hors de l'intervalle 0-" + this.attaques.size());
+			System.err.println("Vous êtes hors de l'intervalle 0-" + this.attaques.size());
 		}
 	}
 
