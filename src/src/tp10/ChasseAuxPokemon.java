@@ -1,12 +1,12 @@
-package tp9;
+package tp10;
+
+import sun.swing.StringUIClientPropertyKey;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 public class ChasseAuxPokemon {
@@ -26,10 +26,25 @@ public class ChasseAuxPokemon {
 		mappeAttaque.put("croquer", new AttaqueCroquer());
 		mappeAttaque.put("bulle", new AttaqueBulle());
 
+		final HashMap<String, Integer> mappePokemon = new HashMap<String, Integer>();
+
 		ArrayList<Pokemon> pokemonsUtilises = new ArrayList<>();
 
 		try {
-			FileReader source = new FileReader("./tp9/jeuPokemon.txt");
+			FileReader source = new FileReader("tp10/pokedexComplet.txt");
+			Scanner s = new Scanner(source);
+			while (s.hasNextLine()) {
+				int index = s.nextInt();
+				String nom = s.next();
+				mappePokemon.put(nom, index);
+				s.nextLine();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			FileReader source = new FileReader("tp9/jeuPokemon.txt");
 			Scanner s = new Scanner(source);
 			while (s.hasNextLine()) {
 				String nom = s.next();
@@ -46,7 +61,7 @@ public class ChasseAuxPokemon {
 						attaques[i] = mappeAttaque.get(s.next());
 					}
 				}
-				pokemonsUtilises.add(new Pokemon(nom, type, niveau, diurne, attaque, defense, attaqueSpeciale, defenseSpeciale, attaques));
+				pokemonsUtilises.add(new Pokemon(mappePokemon.get(nom), nom, type, niveau, diurne, attaque, defense, attaqueSpeciale, defenseSpeciale, attaques));
 				s.nextLine();
 			}
 			s.close();

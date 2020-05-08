@@ -1,4 +1,4 @@
-package src.tp5;
+package tp5;
 
 public class PotionMagique extends Nourriture {
 	

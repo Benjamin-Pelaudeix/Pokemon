@@ -1,4 +1,4 @@
-package src.tp5;
+package tp5;
 import java.util.Scanner;
 
 public class ChasseAuxPokemon {

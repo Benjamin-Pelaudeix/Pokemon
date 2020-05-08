@@ -1,0 +1,16 @@
+Réponses aux questions du TP10
+Benjamin PELAUDEIX, Jean LAURENT - G1A
+
+Exercice 1 -
+2) Nous ne pouvons pas définir la HashMap comme étant du type <String, int> car une HashMap ne peut pas contenir de types primitif. Nous devons choisir le type <String, Integer>.
+
+Exercice 3 -
+1) Le package à importer pour utiliser Set<> est le package java.util.Set.
+
+2) On peut définir le pokédex en tant qu'une structure de données car tous les Pokemons ont le même type de données, avec un nom, des attaques, des attributs.. Le type de collection Set ont un avantage face aux collections de type ArrayList car elles sont ordonnées.
+
+3) On impoorte le package java.util.TreeSet.
+
+4) La différence principale entre un HashSet et une TreeSet est le tri des données. Le TreeSet ordonne les données tandis que le HashSet non.
+
+6) Nous pouvons gérer les doublons en créant une méthode de recherche et en l'utilisant dans notre méthode rencontrer comme condition pour ajouter le pokemon rencontré dans notre Set.
