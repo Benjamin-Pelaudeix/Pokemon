@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ChasseAuxPokemon {
@@ -31,20 +32,20 @@ public class ChasseAuxPokemon {
 		ArrayList<Pokemon> pokemonsUtilises = new ArrayList<>();
 
 		try {
-			FileReader source = new FileReader("tp10/pokedexComplet.txt");
+			FileReader source = new FileReader("src/src/tp10/pokedexComplet.txt");
 			Scanner s = new Scanner(source);
 			while (s.hasNextLine()) {
 				int index = s.nextInt();
 				String nom = s.next();
 				mappePokemon.put(nom, index);
-				s.nextLine();
 			}
+			s.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		try {
-			FileReader source = new FileReader("tp9/jeuPokemon.txt");
+			FileReader source = new FileReader("src/src/tp10/jeuPokemon.txt");
 			Scanner s = new Scanner(source);
 			while (s.hasNextLine()) {
 				String nom = s.next();
@@ -70,10 +71,18 @@ public class ChasseAuxPokemon {
 			e.printStackTrace();
 		}
 
-		System.out.println(pokemonsUtilises.get(0));
+		Joueur ben = new Joueur("Pelaudeix", "Benjamin", 19, new Pokemon[]{pokemonsUtilises.get(0), pokemonsUtilises.get(1), pokemonsUtilises.get(2)}, new Item[15]);
 
 
+		try {
+			ben.getPokedex().charger("src/src/tp10/pokedexJoueur.txt");
+		} catch (InputMismatchException e) {
+			e.printStackTrace();
+			System.out.println("Impossible de charger le fichier : " + e.getMessage());
+			System.exit(1);
+		}
 
+		ben.getPokedex().sauvegarder("src/src/tp10/pokedexJoueur.txt");
 
 
 
@@ -114,7 +123,7 @@ public class ChasseAuxPokemon {
 		PotionMagique mojito = new PotionMagique("Mojito", 2);
 		Jouet balle = new Jouet("Balle",20,10,10,5);
 		Outil marteau = new Outil("Le Petit Marteau des Merveilles", 10,2);
-		Joueur ben = new Joueur("Pelaudeix", "Benjamin", 19, new Pokemon[]{piplup,rowlet,totodile}, new Item[15]);
+
 
 		//instanciation tableau
 		Nourriture[] diversesNourritures = new Nourriture[] {tartiflette, ratatouille, barreChocolat, mojito};

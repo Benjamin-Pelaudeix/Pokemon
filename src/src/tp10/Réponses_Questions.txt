@@ -14,3 +14,6 @@ Exercice 3 -
 4) La différence principale entre un HashSet et une TreeSet est le tri des données. Le TreeSet ordonne les données tandis que le HashSet non.
 
 6) Nous pouvons gérer les doublons en créant une méthode de recherche et en l'utilisant dans notre méthode rencontrer comme condition pour ajouter le pokemon rencontré dans notre Set.
+
+Exercice 5 -
+3) La sauvegarde du pokedex ne donne pas le bon résultat : il ne s'enregistre pas.
