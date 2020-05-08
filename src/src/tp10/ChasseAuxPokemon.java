@@ -76,13 +76,28 @@ public class ChasseAuxPokemon {
 
 		try {
 			ben.getPokedex().charger("src/src/tp10/pokedexJoueur.txt");
-		} catch (InputMismatchException e) {
+		} catch (FileNotFoundException f) {
+			f.printStackTrace();
+			System.out.println("Fichier introuvable, mais il va être bientôt créer");
+			System.exit(1);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("Impossible de charger le fichier : " + e.getMessage());
+			System.exit(1);
+		} catch (InputMismatchException i) {
+			i.printStackTrace();
+			System.out.println("Impossible de charger le fichier : " + i.getMessage());
+			System.exit(1);
+		}
+
+		try	{
+			ben.getPokedex().sauvegarder("src/src/tp10/pokedexJoueur.txt");
+		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Impossible de charger le fichier : " + e.getMessage());
 			System.exit(1);
 		}
 
-		ben.getPokedex().sauvegarder("src/src/tp10/pokedexJoueur.txt");
 
 
 

@@ -26,9 +26,8 @@ public class Pokedex {
         }
     }
 
-    public void charger(String chemin) {
-        try {
-            FileReader source = new FileReader(chemin);
+    public void charger(String chemin) throws IOException, FileNotFoundException {
+        try(FileReader source = new FileReader(chemin)) {
             Scanner s = new Scanner(source);
             while (s.hasNextLine()) {
                 int numero = s.nextInt();
@@ -36,24 +35,17 @@ public class Pokedex {
                 s.nextLine();
             }
             s.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Chargement impossible du fichier : " + e.getMessage());
         }
     }
 
-    public void sauvegarder(String chemin) {
-        try {
-            FileWriter scribe = new FileWriter(chemin);
+    public void sauvegarder(String chemin) throws IOException {
+        try(FileWriter scribe = new FileWriter(chemin)) {
             PrintWriter afficheur = new PrintWriter(scribe);
             for (int numero : setPokemons) {
                 afficheur.println(numero);
             }
             scribe.close();
             afficheur.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Chargement impossible du fichier : " + e.getMessage());
         }
     }
 }
