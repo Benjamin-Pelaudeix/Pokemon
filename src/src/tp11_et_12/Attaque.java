@@ -1,6 +1,5 @@
 package tp11_et_12;
 
-import static tp6.Nourriture.tousLesTypesDePokemons;
 
 public abstract class Attaque {
     protected String nom;
@@ -20,7 +19,7 @@ public abstract class Attaque {
     }
 
     public Attaque(String nom, int puissance, int precision, int nombreRepetitions) {
-        this(nom, tousLesTypesDePokemons, puissance, precision, nombreRepetitions);
+        this(nom, Nourriture.tousLesTypesDePokemons, puissance, precision, nombreRepetitions);
     }
 
     public void resetNombreRepetitions() {

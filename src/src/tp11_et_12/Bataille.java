@@ -4,29 +4,29 @@ import java.util.Scanner;
 
 public class Bataille {
 
-    private Pokemon pokemon1;
-    private Pokemon pokemon2;
-    private Scanner lecteurBataille;
+    private final Pokemon pokemon1;
+    private final Pokemon pokemon2;
+    private final Scanner lecteurBataille;
     private boolean batailleFinie;
 
-    public Bataille(Pokemon pokemon1, Pokemon pokemon2) {
+    public Bataille(Pokemon pokemon1, Pokemon pokemon2, Scanner scanner) {
         this.pokemon1 = pokemon1;
         this.pokemon2 = pokemon2;
-        this.lecteurBataille = new Scanner(System.in);
+        this.lecteurBataille = scanner;
         this.batailleFinie = false;
     }
 
     public void run() {
         while (!batailleFinie) {
-            choisirAction(pokemon1, pokemon2);
+            this.choisirAction(pokemon1, pokemon2);
             if (pokemon2.etreEvanoui()) {
                 batailleFinie = true;
-                System.out.println("### Combat terminé ! " + pokemon2.getNom() + " est KO... ###");
+                System.out.println("### Combat terminé ! " + pokemon2.getNom() + " (ennemi) est KO... ###");
                 pokemon1.rechargerAttaques();
                 pokemon2.rechargerAttaques();
             }
             else {
-                choisirAction(pokemon2, pokemon1);
+                this.choisirAction(pokemon2, pokemon1);
                 if (pokemon1.etreEvanoui()) {
                     batailleFinie = true;
                     System.out.println("### Combat terminé ! " + pokemon1.getNom() + " est KO... ###");
@@ -35,14 +35,20 @@ public class Bataille {
                 }
             }
         }
-        lecteurBataille.close();
     }
 
     private void choisirAction(Pokemon pokemonActif, Pokemon pokemonPassif) {
         System.out.println(pokemonActif.getNom() + " (HP : " + pokemonActif.getHp() + ") choisit une attaque...");
-        pokemonActif.afficherEtatAttaques();
-        int reponseAttaquePokemon1 = lecteurBataille.nextInt();
-        pokemonActif.utiliserAttaque(reponseAttaquePokemon1, pokemonPassif);
+        if (pokemonActif.getMonJoueur() != null) {
+            pokemonActif.afficherEtatAttaques();
+            int reponseAttaquePokemon1 = lecteurBataille.nextInt();
+            pokemonActif.utiliserAttaque(reponseAttaquePokemon1, pokemonPassif);
+        }
+        else {
+            int aleatoire = ((int) (Math.random() * pokemonActif.getAttaques().size()));
+            pokemonActif.utiliserAttaque(aleatoire, pokemonPassif);
+        }
+
         if (batailleFinie && pokemonPassif.getMonJoueur() == null) {
             System.out.println("Le pokémon vaincu n'a pas de maître. Souhaitez-vous le capturer ? (oui/non)");
             String reponseCapture = lecteurBataille.next();
@@ -60,12 +66,10 @@ public class Bataille {
                         System.out.println(pokemonActif.getMonJoueur().getPokemons()[reponsePokemonLibere].getNom() + " est désormais libre");
                         pokemonActif.getMonJoueur().capturer(pokemonPassif);
                         System.out.println(pokemonPassif.getNom() + " a été capturé avec succès");
-                    }
-                    else {
+                    } else {
                         System.out.println("Vous ne libérez aucun pokémon");
                     }
                 }
-
             }
         }
     }

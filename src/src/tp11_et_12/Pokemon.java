@@ -20,7 +20,7 @@ public class Pokemon {
 	private int attaqueSpeciale;
 	private int defenseSpeciale;
 	private int hp;
-	private List<Attaque> attaques = new ArrayList<Attaque>();
+	private List<Attaque> attaques = new ArrayList<Attaque>(4);
 
 	public Pokemon(int numeroPokedex, String nom, String type, int niveau, boolean diurne, String nomDonne, Joueur monJoueur, int attaque, int defense, int attaqueSpeciale, int defenseSpeciale, Attaque[] attaques) {
 		this.numeroPokedex = numeroPokedex;
@@ -47,6 +47,9 @@ public class Pokemon {
 
 	public Pokemon(int numeroPokedex, String nom, String type, int niveau, boolean diurne, int attaque, int defense, int attaqueSpeciale, int defenseSpeciale, Attaque[] attaques) {
 		this(numeroPokedex, nom, type, niveau, diurne, null, null, attaque, defense, attaqueSpeciale, defenseSpeciale, attaques);
+	}
+
+	public Pokemon(int numeroPokedex, String nom, String type, int niveau, boolean diurne, String nomDonne, Joueur monJoueur, int attaque, int defense, int attaqueSpeciale, int defenseSpeciale, List<Attaque> attaques) {
 	}
 
 	public void direBonjour(String periode) {
@@ -190,6 +193,15 @@ public class Pokemon {
 			if (this.attaques.get(i) != null) {
 				System.out.println(i + " : " + this.attaques.get(i).getNom() + " , " + this.attaques.get(i).getRepetitionsRestantes() + "/" + this.attaques.get(i).getNombreRepetitions());
 			}
+		}
+	}
+
+	public Pokemon genererMemePokemon(boolean generer) {
+		if (generer) {
+			return new Pokemon(this.numeroPokedex, this.nom, this.type, this.niveau, this.diurne, null, null, this.attaque, this.defense, this.attaqueSpeciale, this.defenseSpeciale, this.attaques);
+		}
+		else {
+			return null;
 		}
 	}
 

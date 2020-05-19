@@ -203,6 +203,7 @@ public class Joueur {
 			if (this.sac[iterateur] == item) {
 				return iterateur;
 			}
+			iterateur++;
 		}
 		return -1;
 	}
