@@ -1,9 +1,0 @@
-Réponses aux questions du TP9
-Benjamin PELAUDEIX, Jean LAURENT - G1A
-
-Exercice 1 -
-2) Nous pouvons instancier l'attribut "attaques" en ArrayList<Attaque> au lieu de List<Attaque> car ArrayList hérite de la classe List.
-5) L'utilisation de la méthode "ajouterAttaque" ne va pas s'assurer que la taille maximale de 4 ait été dépassée. Il faut donc ajouter une condition pour indiquer au joueur que seules les 4 premières attaques données seront ajoutées à son pokémon.
-
-Exercice 2 -
-3) Les méthodes implémentées dans les sous-classes AttaqueBulle et autres ne sont que des Override de la méthode de leur superclasse respective car elle en hérite. Ainsi, elle sont du type de la classe qu'elle hérite c'est-à-dire AttaquePhysique ou AttaqueSpéciale.

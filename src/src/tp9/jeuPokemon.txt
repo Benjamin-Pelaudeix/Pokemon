@@ -1,4 +1,0 @@
-Piplup Eau 5 true 51 53 61 56 tackle morsure pistoleEau enfer END
-Rowlet Plante 10 false 55 55 50 55 morsure feinte tornadeFeuilles END
-Totodile Eau 8 true 65 64 44 48 bulle coupDeTete END
-Piplup Eau 7 true 60 61 68 60 morsure feinte pistoleEau bulle END
