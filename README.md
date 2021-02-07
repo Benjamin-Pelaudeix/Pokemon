@@ -2,7 +2,7 @@
 
 ## Présentation du projet
 ### Contexte
-Ce projet a été développé ne binôme avec Jean Laurent lors des séances de Travaux Pratiques du module d'apprentissage de Java. Il a été étudié sur plusieurs semaines.
+Ce projet a été développé ne binôme avec Jean Laurent lors des séances de Travaux Pratiques du module d'apprentissage de Java. Il a été étudié sur plusieurs semaines.<br>
 Note : 17 / 20 ✅
 ### Idée générale
 Ce projet est une reproduction du jeu **Pokemon**, en mode console. 
